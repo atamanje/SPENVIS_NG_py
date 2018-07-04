@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.2" version="1.2">
+	<RESOURCE name="spenvis">
+		<TABLE name = "instancetable">
+			<GROUP name = "instancedata">
+				<PARAM value="2018-06-14T13:10:00Z" datatype="char" arraysize="*" name="segmentStartEpoch"/>
+				<PARAM value="P1Y" datatype="char" name="segmentDuration"/>
+				<PARAM value="trajectoryDuration" datatype="char" name="trajectoryDurationSpecification"/>
+				<PARAM value="P1D" datatype="char" name="trajectoryDuration"/>
+				<PARAM value="1.0" datatype="double" name="numberOfOrbits"/>
+				<PARAM value="perigeeApogee" datatype="char" name="altitudeSpecification"/>
+				<PARAM value="300.0" datatype="double" name="perigeeAltitude"/>
+				<PARAM value="3600.0" datatype="double" name="apogeeAltitude"/>
+				<PARAM value="perigeeApogee" datatype="char" name="altitudeSpecification"/>
+				<PARAM value="7000.0" datatype="double" name="semiMajorAxis"/>
+				<PARAM value="0.0" datatype="double" name="eccentricity"/>
+				<PARAM value="300.0" datatype="double" name="circularOrbitAltitude"/>
+				<PARAM value="0.0" datatype="double" name="inclination"/>
+				<PARAM value="rightAscensionOfAscendingNode" datatype="char" name="ascendingNodeSpecification"/>
+				<PARAM value="0.0" datatype="double" name="rightAscensionOfAscendingNode"/>
+				<PARAM value="0.0" datatype="double" name="longitudeOfApogee"/>
+				<PARAM value="0.0" datatype="double" name="longitudeOfPerigee"/>
+				<PARAM value="0.0" datatype="double" name="argumentOfPerigee"/>
+				<PARAM value="0.0" datatype="double" name="trueAnomaly"/>
+				<PARAM value="0" datatype="boolean" name="atmosphericDragPerturbation"/>
+				<PARAM value="0.0" datatype="double" name="atmosphericDragParameter"/>
+				<PARAM value="0.0" datatype="double" name="centered81DayAverageSolarRadioFlux"/>
+				<PARAM value="0.0" datatype="double" name="dailySolarRadioFlux"/>
+				<PARAM value="0.0" datatype="double" name="dailyAverageApIndex"/>
+				<PARAM value="0" datatype="boolean" name="solarRadiationPressurePerturbation"/>
+				<PARAM value="0.0" datatype="double" name="solarRadiationPressure"/>
+				<PARAM value="60.0" datatype="double" name="lowAltitudeTimeResolution"/>
+				<PARAM value="240.0" datatype="double" name="mediumAltitudeTimeResolution"/>
+				<PARAM value="3600.0" datatype="double" name="highAltitudeTimeResolution"/>
+				<PARAM value="20000.0" datatype="double" name="lowerBoundaryAltitude"/>
+				<PARAM value="80000.0" datatype="double" name="upperBoundaryAltitude"/>
+			</GROUP>
+		</TABLE>
+	</RESOURCE>
+</VOTABLE>
+                
+                
+                
+                
+                

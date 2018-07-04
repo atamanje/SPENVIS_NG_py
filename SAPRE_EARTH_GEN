@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE spenvis-workflow [ <!ENTITY nbsp "&#160;"><!ENTITY copy "&#169;"> ]>
+<!--
+ !   SPENVIS-NG Workflow
+ !         Prepared by: N. Messios (BIRA-IASB)
+ !         Released on: June 19, 2015
+ !         Modified on: Dec. 18, 2015 by N. Messios (BIRA-IASB)
+ !                      - Updates and validation against SPENVIS-NG  
+ !                        XML Schema Definition (XSD).
+ !                      - Adding plot
+ !                      - Improving input and report forms
+ !                      Feb. 24, 2016 by N. Messios (BIRA-IASB)
+ !                      - Making available the plotting options       
+ !         (c) Copyright European Space Agency, 2015
+ !-->
+<spenvis-workflow 
+    xmlns     = "http://spenvis-ng.eu/spenvis-model-workflow"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sn1 = "http://spenvis-ng.eu/spenvis-model-manifest"
+    xmlns:sn2 = "http://spenvis-ng.eu/spenvis-model-workflow"
+    xmlns:xml = "http://www.w3.org/XML/1998/namespace"
+    xmlns:xs  = "http://www.w3.org/2001/XMLSchema"
+    xmlns:vot = "http://www.ivoa.net/xml/VOTable/v1.2"
+    xmlns:stc = "http://www.ivoa.net/xml/STC/v1.30"
+    xmlns:spa = "http://www.spase-group.org/data/schema"
+    xmlns:xf  = "http://www.w3.org/2002/xforms"
+    xmlns:fn  = "http://www.w3.org/2005/xpath-functions"
+    xmlns:html = "http://www.w3.org/1999/xhtml">
+    <spa:ResourceID>spenvis://estec.esa.int/spenvis/sapreEarth/wkf_general_orbit/0003</spa:ResourceID>  
+    <spa:ResourceHeader>
+        <spa:ResourceName>SAPRE-GENWKFL</spa:ResourceName> 
+        <spa:ReleaseDate>2015-12-18T00:00:00.0Z</spa:ReleaseDate> 
+        <spa:Description>
+            Workflow for generating a general orbit using the ESOC UNIFLUX Orbit 
+            generator SAPRE (Earth).
+        </spa:Description> 
+        <spa:Acknowledgement>
+            This interface has been prepared by BIRA-IASB.&nbsp;
+            &copy; Copyright ESA 2015 
+        </spa:Acknowledgement> 
+        <spa:Contact> 
+            <spa:PersonID>spenvis://www.aeronomie/people/ae_spen/1224</spa:PersonID> 
+            <spa:Role>MetadataContact</spa:Role>                                         
+        </spa:Contact> 
+        <spa:Contact> 
+            <spa:PersonID>spenvis://www.aeronomie/people/ae_spen/1151</spa:PersonID> 
+            <spa:Role>GeneralContact</spa:Role>                                         
+            <spa:Role>MetadataContact</spa:Role>                                         
+        </spa:Contact> 
+    </spa:ResourceHeader>
+    <spa:ProviderResourceName>SAPRE-EARTHWKFL-GENERAL</spa:ProviderResourceName>                    
+    <spa:ProviderVersion>02.000</spa:ProviderVersion>                        
+    <isMajorChange/>
+    <access-policy>
+      <grant-to>.*</grant-to>
+    </access-policy>   
+    <simpleWorkflow/>
+    <associatedModels>
+      <model>
+        <name>sapreEarth</name>
+        <manifestID>spenvis://estec.esa.int/spenvis4/sapreEarth/2956</manifestID>
+        <instanceElement>
+          <name>sapreEarth_input</name>
+          <manifestGroupName type="input-group">Definition</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sapreEarth_Preserved</name>
+          <manifestGroupName type="output-group">Preserved</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sapreEarth_Summary</name>
+          <manifestGroupName type="output-group">Summary</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sapreEarth_Trajectory</name>
+          <manifestGroupName type="output-group">Trajectory</manifestGroupName>
+        </instanceElement>
+      </model>
+    </associatedModels>
+    <xs:schema>
+    </xs:schema>
+    <intern-groups>
+      <static-group>
+        <vot-TABLE name="general">
+          <vot:PARAM name="segmentTitle" ucd="meta.title" 
+                     datatype="char" arraysize="*"              
+                     value="General Earth orbit" />
+          <vot:PARAM name="orbitType" ucd="meta.id"
+                     datatype="char" arraysize="*"                       
+                     value="GEN" />                     
+        </vot-TABLE>
+      </static-group>
+    </intern-groups>
+    <constraints>
+    </constraints>
+    <processes>
+      <process>
+        <title>Main</title>
+        <condition>fn:true()</condition>
+        <graph>
+          <connect from="general/segmentTitle" to="sapreEarth_input/segmentTitle"/>
+          <connect from="general/orbitType" to="sapreEarth_input/orbitType"/>
+          <provide to="sapreEarth_input/segmentStartEpoch"/>
+          <provide to="sapreEarth_input/segmentDuration"/>
+          <provide to="sapreEarth_input/trajectoryDurationSpecification"/>
+          <provide to="sapreEarth_input/trajectoryDuration"/>
+          <provide to="sapreEarth_input/numberOfOrbits"/>
+          <provide to="sapreEarth_input/altitudeSpecification"/>
+          <provide to="sapreEarth_input/perigeeAltitude"/>
+          <provide to="sapreEarth_input/apogeeAltitude"/>
+          <provide to="sapreEarth_input/altitudeSpecification"/>
+          <provide to="sapreEarth_input/semiMajorAxis"/>    
+          <provide to="sapreEarth_input/eccentricity"/>    
+          <provide to="sapreEarth_input/circularOrbitAltitude"/>  
+          <provide to="sapreEarth_input/inclination"/>    
+          <provide to="sapreEarth_input/ascendingNodeSpecification"/>
+          <provide to="sapreEarth_input/rightAscensionOfAscendingNode"/>
+          <provide to="sapreEarth_input/longitudeOfApogee"/>
+          <provide to="sapreEarth_input/longitudeOfPerigee"/>
+          <provide to="sapreEarth_input/argumentOfPerigee"/>
+          <provide to="sapreEarth_input/trueAnomaly"/>
+          <provide to="sapreEarth_input/atmosphericDragPerturbation"/> 
+          <provide to="sapreEarth_input/atmosphericDragParameter"/> 
+          <provide to="sapreEarth_input/centered81DayAverageSolarRadioFlux"/> 
+          <provide to="sapreEarth_input/dailySolarRadioFlux"/> 
+          <provide to="sapreEarth_input/dailyAverageApIndex"/> 
+          <provide to="sapreEarth_input/solarRadiationPressurePerturbation"/>
+          <provide to="sapreEarth_input/solarRadiationPressure"/>
+          <provide to="sapreEarth_input/lowAltitudeTimeResolution"/>        
+          <provide to="sapreEarth_input/mediumAltitudeTimeResolution"/>        
+          <provide to="sapreEarth_input/highAltitudeTimeResolution"/>        
+          <provide to="sapreEarth_input/upperBoundaryAltitude"/>        
+          <provide to="sapreEarth_input/lowerBoundaryAltitude"/>        
+          <ignore  to="sapreEarth_input/firstLineTLE"/>    
+          <ignore  to="sapreEarth_input/secondLineTLE"/>    
+          <ignore  to="sapreEarth_input/localTimeOfAscendingNode"/> 
+          <ignore  to="sapreEarth_input/longitudeOfGeostationaryOrbit"/> 
+          <capture from="sapreEarth_Preserved/spenvis_sap.html"/>
+          <capture from="sapreEarth_Preserved/spenvis_sao.txt"/>
+          <capture from="sapreEarth_Preserved/spenvis_att.txt"/>
+          <capture from="sapreEarth_Summary/NAIFreferenceCenter"/>
+          <capture from="sapreEarth_Summary/trajectoryDuration"/>
+          <capture from="sapreEarth_Summary/segmentDuration"/>
+          <capture from="sapreEarth_Summary/minimumAltitude"/>
+          <capture from="sapreEarth_Summary/maximumAltitude"/>
+          <capture from="sapreEarth_Summary/meanSunDistance"/>
+          <capture from="sapreEarth_Trajectory/epoch"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/altitude"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/latitude"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/longitude"/>
+        </graph>
+      </process>
+    </processes>
+    <resourceGathering>
+<!-- Mission definitionand representative trajectory definition tab -->     
+      <tab>
+        <label>Mission definition</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Mission &amp; representative trajectory</h3>
+          <fieldset>
+            <legend>Mission definition</legend>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/segmentStartEpoch">
+                <xf:label>Starting date of mission segment:</xf:label>
+                <xf:help>The starting date of the mission segment.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>            
+            <html:p>       
+              <xf:input ref="sapreEarth_input/segmentDuration">
+                <xf:label>Mission segment duration:</xf:label>
+                <xf:help>Duration of the mission segment in years.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/trajectoryDurationSpecification">
+                <xf:label>Define representative trajectory duration using</xf:label>
+                <xf:help>User can select either number of orbits or trajectory duration.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                <xf:item>
+                  <xf:label>number of orbits</xf:label>
+                  <xf:value>numberOfOrbits</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>trajectory duration</xf:label>
+                  <xf:value>trajectoryDuration</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/numberOfOrbits">
+                <xf:label>Number of orbits:</xf:label>
+                <xf:help>Number of orbits to be generated.</xf:help>
+                <xf:hint>Maximum 20 and minimum 0.1</xf:hint>
+              </xf:input>
+              <xf:input ref="sapreEarth_input/trajectoryDuration">
+                <xf:label>Trajectory duration:</xf:label>
+                <xf:help>Duration of the trajectory in days.</xf:help>
+                <!-- xf:hint>No hint</xf:hint --> 
+              </xf:input>            
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>
+<!-- Orbital parameters -->
+      <tab>
+        <label>Orbital parameters</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Orbital parameters for a general orbit around Earth</h3>
+          <fieldset>
+            <legend>Orbital parameters</legend>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/altitudeSpecification">
+                <xf:label>Altitude specification:</xf:label>
+                <xf:help>
+                    Altitude specification for a general orbit (possible values 
+                    are perigee and apogee altitudes, semi-major axis and eccentricity
+                    or altitude for a circular orbit).
+                </xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                  <xf:item>
+                    <xf:label>perigee and apogee altitudes</xf:label>
+                    <xf:value>perigeeApogee</xf:value>
+                  </xf:item>
+                  <xf:item>
+                    <xf:label>semi-major axis and eccentricity</xf:label>
+                    <xf:value>semiMajorAxis</xf:value>
+                  </xf:item>
+                  <xf:item>
+                    <xf:label>altitude for a circular orbit</xf:label>
+                    <xf:value>circularOrbitAltitude</xf:value>
+                  </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/perigeeAltitude">
+                <xf:label>Perigee altitude [km]:</xf:label>
+                <xf:help>Perigee altitude of the orbit.</xf:help>
+                <xf:hint>Minimum 100 and maximum 1000000 km.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/apogeeAltitude">
+                <xf:label>Apogee altitude [km]:</xf:label>
+                <xf:help>Apogee altitude of the orbit.</xf:help>
+                <xf:hint>Minimum 100 and maximum 1000000 km.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/semiMajorAxis">
+                <xf:label>Semi-major axis [km]:</xf:label>
+                <xf:help>
+                    For a general (elliptical) orbit the semi-major axis 
+                    is positive.
+                </xf:help>
+                <xf:hint>Maximum value 10000000.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/eccentricity">
+                <xf:label>Eccentricity:</xf:label>
+                <xf:help>
+                    For a general (elliptical) orbit the eccentricity must be greater 
+                    or equal (circular orbit) to zero and less than one. 
+                </xf:help>
+                <xf:hint>Minimum 0 and maximum 0.999.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/circularOrbitAltitude">
+                <xf:label>Altitude for circular orbit [km]:</xf:label>
+                <xf:help>Altitude for a circular orbit.</xf:help>
+                <xf:hint>Minimum 100 and maximum 100000 km.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/inclination">
+                <xf:label>Inclination [deg]:</xf:label>
+                <xf:help>
+                    The orbit inclination is the angle between the orbital plane and the 
+                    equatorial plane, measured at the ascending node in the direction of 
+                    orbital motion. The orbit is called direct when the inclination is 
+                    smaller than 90 deg and retrograde when the inclination is larger than 
+                    90 deg.
+                </xf:help>
+                <xf:hint>Minimum 0 and maximum 180 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/ascendingNodeSpecification">
+                <xf:label>Ascending node specification:</xf:label>
+                <xf:help>
+                    Specification of the ascending node (possible values are right 
+                    ascension of the ascending node, longitude of apogee or longitude 
+                    of perigee).
+                </xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                  <xf:item>
+                    <xf:label>Right ascension of the ascending node</xf:label>
+                    <xf:value>rightAscensionOfAscendingNode</xf:value>
+                  </xf:item>
+                  <xf:item>
+                    <xf:label>Longitude of apogee</xf:label>
+                    <xf:value>longitudeOfApogee</xf:value>
+                  </xf:item>
+                  <xf:item>
+                    <xf:label>Longitude of perigee</xf:label>
+                    <xf:value>longitudeOfPerigee</xf:value>
+                  </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/rightAscensionOfAscendingNode">
+                <xf:label>Right ascension of the ascending node [deg]:</xf:label>
+                <xf:help>
+                    Right ascension of the ascending node w.r.t gamma 50. The right ascension 
+                    of the ascending node is the angle in the equatorial plane between the line 
+                    of nodes and the direction to the vernal equinox, measured from the vernal 
+                    equinox (the direction of the intersection of the ecliptic and equatorial 
+                    planes) towards the ascending node. Alternatively, the longitude of perigee 
+                    or apogee can be specified.
+                </xf:help>
+                <xf:hint>Minimum 0 and maximum 360 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/longitudeOfApogee">
+                <xf:label>Longitude of apogee [deg]:</xf:label>
+                <xf:help>Longitude of apogee definition.</xf:help>
+                <xf:hint>Minimum 0 and maximum 180 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/longitudeOfPerigee">
+                <xf:label>Longitude of perigee [deg]:</xf:label>
+                <xf:help>Longitude of perigee definition.</xf:help>
+                <xf:hint>Minimum 0 and maximum 180 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/argumentOfPerigee">
+                <xf:label>Argument of perigee [deg]:</xf:label>
+                <xf:help>
+                    The argument of perigee is the angle measured in the orbital
+                     plane from the ascending node to the perigee.
+                </xf:help>
+                <xf:hint>Minimum 0 and maximum 180 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/trueAnomaly">
+                <xf:label>True anomaly [deg]:</xf:label>
+                <xf:help>
+                    The true anomaly is the angle from the perigee direction to 
+                    the satellite direction.
+                </xf:help>
+                <xf:hint>Minimum 0 and maximum 180 degrees.</xf:hint>
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>                    
+         </html:div>         
+      </tab>      
+<!-- Solar radiation pressure tab -->     
+      <tab>
+        <label>Solar radiation pressure</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Perturbations due to solar radiation pressure</h3>
+          <html:p>
+            Solar radiation pressure parameter is defined as 0.451x10<html:sup>-8</html:sup> K A/M, where K is the material 
+            parameter of the satellite.&nbsp; A is the total reflective area (m<html:sup>2</html:sup>) of satellites 
+            and plates; &nbsp; for spherical satellites it is the cross sectional area. M (kg) is the 
+            mass of the satellite.
+            </html:p>
+            <html:p> 
+            Note that K depends on the the reflectivity (rho) and 
+            transmittivity (gamma):
+            <html:ul>
+              <html:li>K=1-gamma+rho (plate), K=1-gamma (sphere)</html:li>
+              <html:li>K=2 (plate with perfect specular reflection)</html:li>
+              <html:li>K=1 (sphere with perfect specular reflection or perfect absorption)</html:li>
+              <html:li>K=1.44 (sphere with perfect diffuse reflection)</html:li>
+            </html:ul>
+          </html:p>       
+          <html:p></html:p>        
+          <fieldset>
+            <legend>Solar radiation pressure</legend>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/solarRadiationPressurePerturbation">
+                <xf:label>Account for the solar radiation pressure:</xf:label>
+                <xf:help>Orbit generator accounts for solar radiation pressure perturbation.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                <xf:item>
+                  <xf:label>no</xf:label>
+                  <xf:value>0</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>yes</xf:label>
+                  <xf:value>1</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/solarRadiationPressure">
+                <xf:label>Solar radiation pressure parameter [m<html:sup>2</html:sup>kg<html:sup>-1</html:sup>]:</xf:label>
+                <xf:help>Solar radiation pressure parameter.</xf:help>
+                <xf:hint>Maximum 1 and minimum 0 m<html:sup>2</html:sup>kg<html:sup>-1</html:sup></xf:hint>
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>  
+<!-- Atmosperic drag -->   
+      <tab>
+        <label>Atmosperic drag</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Atmosperic drag</h3>
+          <html:p>
+            Atmospheric drag parameter (or ballistic coefficient) defined as 0.5x10 <html:sup>6</html:sup> CD A/M,&nbsp; 
+            where CD is a dimensionless drag coefficient, A is the cross sectional area (m<html:sup>2</html:sup>) of the satellite,&nbsp; 
+            and M (kg) is the mass of the satellite. The atmospheric drag is evaluated using the NRLMSISE-00 model. 
+          </html:p>
+          <html:p></html:p>        
+          <fieldset>
+            <legend>Atmosperic drag</legend>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/atmosphericDragPerturbation">
+                <xf:label>Accound for atmospheric drag:</xf:label>
+                <xf:help>Orbit generator accounts for atmospheric drag.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                <xf:item>
+                  <xf:label>no</xf:label>
+                  <xf:value>0</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>yes</xf:label>
+                  <xf:value>1</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/atmosphericDragParameter">
+                <xf:label>Atmospheric drag parameter [m<html:sup>2</html:sup> kg<html:sup>-1</html:sup>]:</xf:label>
+                <xf:help>Atmospheric drag parameter.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/centered81DayAverageSolarRadioFlux">
+                <xf:label>F<html:sub>10.7</html:sub> (Centred 81 day average) [10<html:sup>-22</html:sup> w m<html:sup>2</html:sup>Hz<html:sup>-1</html:sup>]:</xf:label>
+                <xf:help>Centred 81 day average F<html:sub>10.7</html:sub> solar radio flux.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/dailySolarRadioFlux">
+                <xf:label>F<html:sub>10.7</html:sub> (day value) [10<html:sup>-22</html:sup> w m<html:sup>2</html:sup>Hz<html:sup>-1</html:sup>]:</xf:label>
+                <xf:help>The day value of F<html:sub>10.7</html:sub> solar radio flux.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/dailyAverageApIndex">
+                <xf:label>Daily average of A<html:sub>p</html:sub> index [2nT]:</xf:label>
+                <xf:help>The daily average of the A<html:sub>p</html:sub> index.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+         </html:div>         
+      </tab>
+<!-- Output resolution -->
+      <tab>
+        <label>Output resolution</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Output resolution for a general orbit around Earth</h3>
+          <fieldset>
+            <legend>Output resolution</legend>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/lowAltitudeTimeResolution">
+                <xf:label>Low altitude time resolution [s]:</xf:label>
+                <xf:help>Time resolution for low altitude.</xf:help>
+                <xf:hint>Minimum 60, maximum 3600 seconds</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/mediumAltitudeTimeResolution">
+                <xf:label>Medium altitude time resolution [s]:</xf:label>
+                <xf:help>Time resolution for medium altitude.</xf:help>
+                <xf:hint>Minimum 60, maximum 3600 seconds</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/highAltitudeTimeResolution">
+                <xf:label>High altitude time resolution [s]:</xf:label>
+                <xf:help>Time resolution for high altitude.</xf:help>
+                <xf:hint>Minimum 60, maximum 3600 seconds</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/lowerBoundaryAltitude">
+                <xf:label>Lower boundary altitude [km]:</xf:label>
+                <xf:help>Separation between regions of medium and low altitude time resolution.</xf:help>
+                <xf:hint>Minimum 1000, maximum 100000 km</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/upperBoundaryAltitude">
+                <xf:label>Upper boundary altitude [km]:</xf:label>
+                <xf:help>Separation between regions of high and medium altitude time resolution.</xf:help>
+                <xf:hint>Minimum 1000, maximum 100000 km</xf:hint>
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>
+    </resourceGathering>    
+    <resourceDelivering>
+      <tab>
+        <label>Mission summary</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Mission &amp; representative trajectory summary</html:h3>
+          <html:p>
+          </html:p>
+          <html:ul>
+            <html:li>
+                Mission duration [years]: <xf:output ref="sapreEarth_Summary/segmentDuration"/>
+            </html:li>
+            <html:li>
+                Representative trajectory duration [days]: <xf:output ref="sapreEarth_Summary/trajectoryDuration"/>
+            </html:li>
+            <html:li>
+                Orbit type: <xf:output ref="sapreEarth_input/orbitType"/> 
+            </html:li>
+            <html:li>
+                Minimum altitude [km]: <xf:output ref="sapreEarth_Summary/minimumAltitude"/>
+            </html:li>
+            <html:li>
+                Maximum altitude [km]: <xf:output ref="sapreEarth_Summary/maximumAltitude"/>
+            </html:li>
+            <html:li>
+                Mean distance between spacecraft and the Sun [AU]: <xf:output ref="sapreEarth_Summary/meanSunDistance"/>
+            </html:li>
+          </html:ul>
+        </html:div>
+      </tab>
+      <tab>
+        <label>Spacecraft coordinates</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Spacecraft coordinates</html:h3>
+          <html:p>
+          
+          <html:table border="2" cellpadding="4" cellspacing="0">
+            <html:tr>
+              <html:th>Epoch</html:th>
+              <html:th>Altitude</html:th>
+              <html:th>Latitude</html:th>
+              <html:th>Longitude</html:th>
+            </html:tr>
+            <html:tr>
+              <html:td></html:td>
+              <html:td>[km]</html:td>
+              <html:td>[deg]</html:td>
+              <html:td>[deg]</html:td>
+            </html:tr>
+            <html:tr>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sapreEarth_Trajectory/epoch">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sapreEarth_Trajectory/planetodeticCoordinates/altitude">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sapreEarth_Trajectory/planetodeticCoordinates/latitude">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sapreEarth_Trajectory/planetodeticCoordinates/longitude">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+            </html:tr>
+          </html:table>              
+          </html:p>
+        </html:div>
+      </tab>
+      <report-tab>
+      </report-tab>
+      <plot-tab>
+        <stacked title="Orbit parameters as a function of time">
+          <plotable type="scatter">sapreEarth_Trajectory/planetodeticCoordinates/altitude</plotable>
+          <plotable type="scatter">sapreEarth_Trajectory/planetodeticCoordinates/latitude</plotable>
+          <plotable type="scatter">sapreEarth_Trajectory/planetodeticCoordinates/longitude</plotable>
+        </stacked>
+      </plot-tab>
+    </resourceDelivering> 
+    <persons>  
+        <spa:Person>                                                                 
+            <spa:ResourceID>spenvis://www.aeronomie.be/people/ae_spen/1224</spa:ResourceID> 
+            <spa:PersonName>Neophytos Messios</spa:PersonName> 
+            <spa:OrganizationName>Belgian Institute for Space Aeronomy</spa:OrganizationName> 
+            <spa:Address>BIRA-IASB L2A2; Ringlaan 3; B-1180 Brussel; BELGIUM</spa:Address> 
+            <spa:Email>neophytos.messios@aeronomie.be</spa:Email> 
+            <spa:PhoneNumber>+32-2-3730419</spa:PhoneNumber>
+            <spa:FaxNumber>+3223748423</spa:FaxNumber> 
+            <spa:Note>http://www.aeronomie.be/en/organisation/spaceweather.htm</spa:Note> 
+        </spa:Person>
+    </persons>
+</spenvis-workflow>

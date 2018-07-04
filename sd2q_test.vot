@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<VOTABLE version="1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:stc="http://www.ivoa.net/xml/STC/v1.30"
+                       xmlns="http://www.ivoa.net/xml/VOTable/v1.2">
+<!--
+ !    SPENVIS-NG === QinetiQ Extension to NIST SHIELDOSE-2 code 4.6.7.2956
+ !    Filename:      input-vo-table.vot
+ !    Prepared by:   E. De Donder (BIRA-IASB)
+ !    Modified on:   Feb. 21, 2014 by N. Messios (BIRA-IASB)
+ !                   - Updating SPENVIS4 Version Information
+ !                   May. 15, 2014 by N. Messios (BIRA-IASB)
+ !                   - Incorporating updates of GSTP-SPENVIS5-SUM-0011+Annex_1
+ !                   Jun. 29, 2015 by N. Messios (BIRA-IASB)
+ !                   - Adapting units syntax according to Standards for  
+ !                   Astronomical Catalogues, V.2.0 (Feb 2000)      
+ !    Copyright:    (c) Copyright European Space Agency, 2013
+ !-->
+   <RESOURCE name="spenvis">
+<TABLE name = "instancetable">
+<GROUP name = "instancedata">
+  <PARAM value="2011-01-01T00:00:00Z" datatype="char" name="segmentStartEpoch"/>
+  <PARAM value="P1Y" datatype="char" name="segmentDuration"/>
+  <PARAM value="trajectoryDuration" datatype="char" name="trajectoryDurationSpecification"/>
+  <PARAM value="P1D" datatype="char" name="trajectoryDuration"/>
+  <PARAM value="0.0" datatype="double" name="longitudeOfGeostationaryOrbit"/>
+  <PARAM value="0" datatype="boolean" name="solarRadiationPressurePerturbation"/>
+  <PARAM value="1.0" datatype="double" name="exposureThresholdFlux"/>
+  <PARAM value="solarMaximum" datatype="char" name="AE8mode"/>
+  <PARAM value="0" datatype="boolean" name="AE8localTimeVariation"/>
+  <PARAM value="50.000" datatype="char" name="AE8confidenceLevel"/>
+  <PARAM value="finiteSlab" datatype="char" name="shieldingConfiguration"/>
+  <PARAM value="Aluminium" datatype="char" name="shieldingMaterial"/>
+  <PARAM value="Si" datatype="char" name="detectorMaterial"/>
+</GROUP></TABLE>
+ <TABLE name="Definition">
+      <PARAM datatype="char"  arraysize="*" name="segmentDuration"          ucd="time.duration" value="P1Y"/>
+      <PARAM datatype="char"  arraysize="*" name="shieldingConfiguration"   ucd="meta"          value="sphericalShielding" /> 
+      <PARAM datatype="char"  arraysize="*" name="shieldingMaterial"        ucd="meta"          value="Aluminium" />     
+      <PARAM datatype="char"  arraysize="*" name="detectorMaterial"         ucd="meta"          value="Si" /> 
+      <PARAM datatype="char"  arraysize="*" name="shieldDepthSpecification" ucd="meta"          value="default" /> 
+      <PARAM datatype="char"  arraysize="*" name="shieldDepthUnits"         ucd="meta"          value="mm" /> 
+      <PARAM datatype="char"  arraysize="*" name="nuclearAttenuation"       ucd="meta"          value="1" /> 
+      <PARAM datatype="float" arraysize="*"   name="shieldDepthValues"   ucd="phys"          value="0.05 0.1 0.2 0.3 0.4 0.5 0.6 0.8 1.0 1.5 2.0 2.5 3.0 3.5 4.0 5.0 6.0 7.0 8.0 9.0 10.0 12.0 14.0 16.0 18.0 20.0" unit="mm" />      
+      <PARAM datatype="boolean"             name="SSATdoseMode"             ucd="meta"          value="0" />
+      <DATA><TABLEDATA></TABLEDATA></DATA>
+    </TABLE>
+    <TABLE name="Environment">
+      <GROUP name="protonFluxSpectrum">
+        <PARAM name="particleName" ucd="phys" datatype="char" arraysize="10" utype="spa:Particle.ParticleType" value="proton    "/> 
+        <PARAM name="Q" ucd="phys" datatype="int" utype="spa:Particle.ParticleQuantity.AverageChargeState" value="1" /> 
+        <PARAM name="PDGcode" ucd="meta.code.class" datatype="int" utype="spa:Particle.Qualifier.Group" value="2213" /> 
+        <PARAM name="angularDistribution" ucd="phys" datatype="char" arraysize="*" utype="spa:Integral.SolidAngle" value="isotropic" />
+        <PARAM name="hasIntegral" ucd="meta" datatype="boolean" utype="xs:boolean" value="1" />                                 
+        <PARAM name="hasDifferential" ucd="meta" datatype="boolean" utype="xs:boolean" value="1" /> 
+        <PARAM name="isTimeIntegrated" ucd="meta" datatype="boolean" utype="xs:boolean" value="0" /> 
+        <PARAM name="energy" ucd="phys.energy" ID="Environment.protonFluxSpectrum.energy" datatype="float" arraysize="29" utype="spa:Particle.ParticleQuality.Energy"                           
+               value="0.1 0.15 0.2 0.3 0.4 0.5 0.6 0.7 1.0 1.5 2.0 3.0 4.0 5.0 6.0 7.0 10.0 15.0 20.0 30.0 40.0 50.0 60.0 70.0 100.0 150.0 200.0 300.0 400.0"                  
+               unit="MeV" />
+        <PARAM name="integralIntensity" ucd="phys" datatype="double" arraysize="*" utype="spa:Particle.ParticleQuality.NumberFlux"                           
+               value="0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"                  
+               unit="cm-2.s-1" 
+               ref="Environment.protonFluxSpectrum.energy"/>                                                 
+        <PARAM name="differentialIntensity" ucd="phys" datatype="double"  arraysize="*" utype="spa:Particle.ParticleQuality.NumberFlux"                           
+               value="304850000	232990000	171870000	100840000	65948000	44254000	31345000	23156000	11468000	3783500	1463900	331050	116690	50219	28361	17581	6855.8	1594.3	452.86	93.09	30.661	18.844	10.841	8.425	5.459	2.8273	1.5963	0.54479	0.036321"                  
+               unit="cm-2.MeV-1.s-1" 
+               ref="Environment.protonFluxSpectrum.energy"/>         
+      </GROUP>
+      <GROUP name="electronFluxSpectrum">
+        <PARAM name="particleName" ucd="phys" datatype="char" arraysize="10" utype="spa:Particle.ParticleType" value="e-        " /> 
+        <PARAM name="Q" ucd="phys" datatype="int" utype="spa:Particle.ParticleQuantity.AverageChargeState" value="-1" /> 
+        <PARAM name="PDGcode" ucd="meta.code.class" datatype="int" utype="spa:Particle.Qualifier.Group" value="11" /> 
+        <PARAM name="angularDistribution" ucd="phys" datatype="char" arraysize="*" utype="spa:Integral.SolidAngle" value="isotropic" />
+        <PARAM name="hasIntegral" ucd="meta" datatype="boolean" utype="xs:boolean" value="1" />                                 
+        <PARAM name="hasDifferential" ucd="meta" datatype="boolean" utype="xs:boolean" value="1" /> 
+        <PARAM name="isTimeIntegrated" ucd="meta" datatype="boolean" utype="xs:boolean" value="0" /> 
+        <PARAM name="energy" ucd="phys.energy" ID="Environment.electronFluxSpectrum.energy" datatype="float" arraysize="*" utype="spa:Particle.ParticleQuality.Energy"                           
+               value="0.04 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0 5.5 6.0 6.5 7.0"                  
+               unit="MeV" />
+        <PARAM name="integralIntensity" ucd="phys" datatype="double" arraysize="*" utype="spa:Particle.ParticleQuality.NumberFlux"                           
+               value="0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"                  
+               unit="cm-2.s-1" 
+               ref="Environment.electronFluxSpectrum.energy"/>                                                 
+        <PARAM name="differentialIntensity" ucd="phys" datatype="double" arraysize="*" utype="spa:Particle.ParticleQuality.NumberFlux"                           
+               value="518290000	390070000	206890000	96465000	48552000	25944000	14246000	9178800	6026000	3226200	1751900	1026700	611450	380300	236870	151850	98194	60579	37579	23700	14937	8615.6	4981.1	2728.6	1472.8	714.19	211.91	45.741	9.5444	0"                  
+               unit="cm-2.MeV-1.s-1" 
+               ref="Environment.electronFluxSpectrum.energy"/>         
+      </GROUP>
+    </TABLE>
+  </RESOURCE> 
+</VOTABLE>
+
+
+

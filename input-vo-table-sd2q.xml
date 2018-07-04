@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.2" version="1.2">
+    <RESOURCE name="spenvis://estec.esa.int/spenvis4/sd2q/2956">
+        <TABLE name="Environment">
+            <GROUP name="electronFluxSpectrum">
+                <PARAM value="2.728E8 2.0723E8 1.105E8 5.061E7 2.5963E7 1.3849E7 7201700.0 4791300.0 3212700.0 1559500.0 646210.0 304950.0 142400.0 85333.0 50745.0 24131.0 11277.0 6450.6 3667.4 2636.4 1849.1 1033.5 576.52 364.12 199.52 43.695 3.4999 0.0 0.0 0.0" unit="cm-2.MeV-1.s-1" datatype="double" name="differentialIntensity" ucd="phys" arraysize="*"/>
+                <PARAM value="0" datatype="boolean" name="isTimeIntegrated" ucd="meta"/>
+                <PARAM value="4.4362E7 2.9961E7 1.4702E7 7860700.0 4579600.0 2668100.0 1809900.0 1227700.0 851630.0 428470.0 212470.0 105360.0 59993.0 34161.0 17327.0 8788.3 5261.3 3149.8 2036.0 1316.1 717.83 391.52 201.07 103.26 19.011 3.4999 0.0 0.0 0.0 0.0" unit="cm-2.s-1" datatype="double" name="integralIntensity" ucd="phys" arraysize="*"/>
+                <PARAM value="0.04 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0 5.5 6.0 6.5 7.0" unit="MeV" datatype="float" name="energy" ucd="phys.energy" arraysize="*"/>
+                <PARAM value="e-        " datatype="char" name="particleName" ucd="phys" arraysize="10"/>
+                <PARAM value="1" datatype="boolean" name="hasDifferential" ucd="meta"/>
+                <PARAM value="11" datatype="int" name="PDGcode" ucd="meta.code.class"/>
+                <PARAM value="-1" datatype="int" name="Q" ucd="phys"/>
+                <PARAM value="isotropic" datatype="char" name="angularDistribution" ucd="phys" arraysize="*"/>
+                <PARAM value="1" datatype="boolean" name="hasIntegral" ucd="meta"/>
+            </GROUP>
+        </TABLE>
+        <TABLE name="Definition">
+            <PARAM value="finiteSlab" datatype="char" name="shieldingConfiguration" ucd="meta" arraysize="*"/>
+            <PARAM value="P1Y" datatype="char" name="segmentDuration" ucd="time.duration" arraysize="*"/>
+            <PARAM value="Aluminium" datatype="char" name="shieldingMaterial" ucd="meta" arraysize="*"/>
+            <PARAM value="default" datatype="char" name="shieldDepthSpecification" ucd="meta" arraysize="*"/>
+            <PARAM value="Si" datatype="char" name="detectorMaterial" ucd="meta" arraysize="*"/>
+            <PARAM value="1" datatype="char" name="nuclearAttenuation" ucd="meta" arraysize="*"/>
+        </TABLE>
+    </RESOURCE>
+</VOTABLE>

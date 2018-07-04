@@ -1,0 +1,34 @@
+<data>
+    <sapreEarth_input>
+        <segmentStartEpoch>@path@segmentStartEpoch</segmentStartEpoch>
+        <segmentDuration>@path@segmentDuration</segmentDuration>
+        <trajectoryDurationSpecification>@path@trajectoryDurationSpecification</trajectoryDurationSpecification>
+        <trajectoryDuration>@path@trajectoryDuration</trajectoryDuration>
+        <numberOfOrbits>@path@numberOfOrbits</numberOfOrbits>
+        <altitudeSpecification>@path@altitudeSpecification</altitudeSpecification>
+        <perigeeAltitude>@path@perigeeAltitude</perigeeAltitude>
+        <apogeeAltitude>@path@apogeeAltitude</apogeeAltitude>
+        <semiMajorAxis>@path@semiMajorAxis</semiMajorAxis>
+        <eccentricity>@path@eccentricity</eccentricity>
+        <circularOrbitAltitude>@path@circularOrbitAltitude</circularOrbitAltitude>
+        <inclination>@path@inclination</inclination>
+        <ascendingNodeSpecification>@path@ascendingNodeSpecification</ascendingNodeSpecification>
+        <rightAscensionOfAscendingNode>@path@rightAscensionOfAscendingNode</rightAscensionOfAscendingNode>
+        <longitudeOfApogee>@path@longitudeOfApogee</longitudeOfApogee>
+        <longitudeOfPerigee>@path@longitudeOfPerigee</longitudeOfPerigee>
+        <argumentOfPerigee>@path@argumentOfPerigee</argumentOfPerigee>
+        <trueAnomaly>@path@trueAnomaly</trueAnomaly>
+        <atmosphericDragPerturbation>@path@atmosphericDragPerturbation</atmosphericDragPerturbation>
+        <atmosphericDragParameter>@path@atmosphericDragParameter</atmosphericDragParameter>
+        <centered81DayAverageSolarRadioFlux>@path@centered81DayAverageSolarRadioFlux</centered81DayAverageSolarRadioFlux>
+        <dailySolarRadioFlux>@path@dailySolarRadioFlux</dailySolarRadioFlux>
+        <dailyAverageApIndex>@path@dailyAverageApIndex</dailyAverageApIndex>
+        <solarRadiationPressurePerturbation>@path@solarRadiationPressurePerturbation</solarRadiationPressurePerturbation>
+        <solarRadiationPressure>@path@solarRadiationPressure</solarRadiationPressure>
+        <lowAltitudeTimeResolution>@path@lowAltitudeTimeResolution</lowAltitudeTimeResolution>
+        <mediumAltitudeTimeResolution>@path@mediumAltitudeTimeResolution</mediumAltitudeTimeResolution>
+        <highAltitudeTimeResolution>@path@highAltitudeTimeResolution</highAltitudeTimeResolution>
+        <lowerBoundaryAltitude>@path@lowerBoundaryAltitude</lowerBoundaryAltitude>
+        <upperBoundaryAltitude>@path@upperBoundaryAltitude</upperBoundaryAltitude>
+    </sapreEarth_input>
+</data>

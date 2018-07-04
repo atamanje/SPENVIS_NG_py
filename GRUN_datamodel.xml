@@ -1,0 +1,14 @@
+<data>
+    <td_input>
+        <ALT>@path@ALT</ALT>
+        <KMASDEN>@path@KMASDEN</KMASDEN>
+        <DENSITY>@path@DENSITY</DENSITY>
+        <IVAR>@path@IVAR</IVAR>
+        <MASS1>@path@MASS1</MASS1>
+        <MASS2>@path@MASS2</MASS2>
+        <DIAM1>@path@DIAM1</DIAM1>
+        <DIAM2>@path@DIAM2</DIAM2>
+        <FMASS>@path@FMASS</FMASS>
+        <FDIAM>@path@FDIAM</FDIAM>
+    </td_input>
+</data>

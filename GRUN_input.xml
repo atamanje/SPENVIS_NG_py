@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.2" version="1.2">
+	<RESOURCE name="spenvis">
+		<TABLE name = "instancetable">
+			<GROUP name = "instancedata">
+				<PARAM value="415.0" datatype="double" name="ALT"/>
+				<PARAM value="0" datatype="int" name="KMASDEN"/>
+				<PARAM value="2.0" datatype="double" name="DENSITY"/>
+				<PARAM value="0" datatype="int" name="IVAR"/>
+				<PARAM value="-6.0" datatype="double" name="MASS1"/>
+				<PARAM value="0.0" datatype="double" name="MASS2"/>
+				<PARAM value="1.0" datatype="double" name="DIAM1"/>
+				<PARAM value="1.0" datatype="double" name="DIAM2"/>
+				<PARAM value="1.0" datatype="double" name="FMASS"/>
+				<PARAM value="1.0" datatype="double" name="FDIAM"/>
+			</GROUP>
+		</TABLE>
+	</RESOURCE>
+</VOTABLE>

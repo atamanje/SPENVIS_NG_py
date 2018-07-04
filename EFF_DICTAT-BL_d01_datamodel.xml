@@ -1,0 +1,31 @@
+<data>
+    <dictat-BL_input>
+        <BoverB0>@path@BoverB0</BoverB0>
+        <L_RE>@path@L_RE</L_RE>
+        <FracSolCycle>@path@FracSolCycle</FracSolCycle>
+        <FracYear>@path@FracYear</FracYear>
+        <Geometry>@path@Geometry</Geometry>
+        <coreRadius>@path@coreRadius</coreRadius>
+        <fieldOfView>@path@fieldOfView</fieldOfView>
+        <Dielectric>@path@Dielectric</Dielectric>
+        <dielectricThickness>@path@dielectricThickness</dielectricThickness>
+        <dielectricTemperature>@path@dielectricTemperature</dielectricTemperature>
+        <dielectricMaterialLabel>@path@dielectricMaterialLabel</dielectricMaterialLabel>
+        <dielectricDensity>@path@dielectricDensity</dielectricDensity>
+        <dielectricConductivity>@path@dielectricConductivity</dielectricConductivity>
+        <dielectricConstant>@path@dielectricConstant</dielectricConstant>
+        <dielectricBrakedownE>@path@dielectricBrakedownE</dielectricBrakedownE>
+        <dielectricRICKp>@path@dielectricRICKp</dielectricRICKp>
+        <dielectricRICDelta>@path@dielectricRICDelta</dielectricRICDelta>
+        <dielectricActivationEnergy>@path@dielectricActivationEnergy</dielectricActivationEnergy>
+        <dielectricGrounding>@path@dielectricGrounding</dielectricGrounding>
+        <dielectricGroundingSurface>@path@dielectricGroundingSurface</dielectricGroundingSurface>
+        <Shield>@path@Shield</Shield>
+        <shieldThickness>@path@shieldThickness</shieldThickness>
+        <shieldMaterialLabel>@path@shieldMaterialLabel</shieldMaterialLabel>
+        <shieldDensity>@path@shieldDensity</shieldDensity>
+        <Core>@path@Core</Core>
+        <coreMaterialLabel>@path@coreMaterialLabel</coreMaterialLabel>
+        <coreDensity>@path@coreDensity</coreDensity>
+    </dictat-BL_input>
+</data>

@@ -1,0 +1,23 @@
+<data>
+   <sapreEarth_input>
+      <segmentStartEpoch>@path@segmentStartEpoch</segmentStartEpoch>
+      <segmentDuration>@path@segmentDuration</segmentDuration>
+      <trajectoryDurationSpecification>@path@trajectoryDurationSpecification</trajectoryDurationSpecification>
+      <trajectoryDuration>@path@trajectoryDuration</trajectoryDuration>
+	  <numberOfOrbits>@path@numberOfOrbits</numberOfOrbits>
+      <longitudeOfGeostationaryOrbit>@path@longitudeOfGeostationaryOrbit</longitudeOfGeostationaryOrbit>
+      <solarRadiationPressurePerturbation>@path@solarRadiationPressurePerturbation</solarRadiationPressurePerturbation>
+   </sapreEarth_input>
+   <trepAE8_input>
+      <exposureThresholdFlux>@path@exposureThresholdFlux</exposureThresholdFlux>
+      <AE8mode>@path@AE8mode</AE8mode>
+      <AE8localTimeVariation>@path@AE8localTimeVariation</AE8localTimeVariation>
+      <AE8confidenceLevel>@path@AE8confidenceLevel</AE8confidenceLevel>
+   </trepAE8_input>
+   <sd2q_input>
+      <shieldingConfiguration>@path@shieldingConfiguration</shieldingConfiguration>
+      <shieldingMaterial>@path@shieldingMaterial</shieldingMaterial>
+      <detectorMaterial>@path@detectorMaterial</detectorMaterial>
+   </sd2q_input>
+</data>
+

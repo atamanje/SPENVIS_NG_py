@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.2" version="1.2">
+	<RESOURCE name="spenvis">
+		<TABLE name = "instancetable">
+			<GROUP name = "instancedata">
+				<PARAM value="1.0" datatype="double" name="BoverB0"/>
+				<PARAM value="4.0" datatype="double" name="L_RE"/>
+				<PARAM value="0.5" datatype="double" name="FracSolCycle"/>
+ 				<PARAM value="0.25" datatype="double" name="FracYear"/>
+				<PARAM value="planar" datatype="char" name="Geometry"/>
+ 				<PARAM value="0.1" datatype="double" name="coreRadius"/>
+				<PARAM value="90.0" datatype="double" name="fieldOfView"/>
+				<PARAM value="TEFLON" datatype="char" name="Dielectric"/>
+				<PARAM value="0.1" datatype="double" name="dielectricThickness"/>
+				<PARAM value="298.0" datatype="double" name="dielectricTemperature"/>
+				<PARAM value="USER" datatype="char" name="dielectricMaterialLabel"/>
+				<PARAM value="1.2" datatype="double" name="dielectricDensity"/>
+				<PARAM value="1.0e-15" datatype="double" name="dielectricConductivity"/>
+				<PARAM value="4.0" datatype="double" name="dielectricConstant"/>
+				<PARAM value="1.0e-7" datatype="double" name="dielectricBrakedownE"/>
+				<PARAM value="2.2e-15" datatype="double" name="dielectricRICKp"/>
+				<PARAM value="1.0" datatype="double" name="dielectricRICDelta"/>
+				<PARAM value="1.7" datatype="double" name="dielectricActivationEnergy"/>
+				<PARAM value="oneSurface" datatype="char" name="dielectricGrounding"/>
+				<PARAM value="I" datatype="char" name="dielectricGroundingSurface"/>
+				<PARAM value="ALUMINIUM" datatype="char" name="Shield"/>
+				<PARAM value="0.1" datatype="double" name="shieldThickness"/>
+				<PARAM value="USER" datatype="char" name="shieldMaterialLabel"/>
+				<PARAM value="10.5" datatype="double" name="shieldDensity"/>
+				<PARAM value="ALUMINIUM" datatype="char" name="Core"/>
+				<PARAM value="USER" datatype="char" name="coreMaterialLabel"/>
+				<PARAM value="8.96" datatype="double" name="coreDensity"/>
+			</GROUP>
+		</TABLE>
+	</RESOURCE>
+</VOTABLE>

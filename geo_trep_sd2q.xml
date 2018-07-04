@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE spenvis-workflow [ <!ENTITY nbsp "&#160;"><!ENTITY copy "&#169;"> ]>
+<!--
+ !   SPENVIS-NG Workflow
+ !         Prepared by: N. Messios (BIRA-IASB)
+ !         Released on: May 21, 2014
+ !         Modified on: Dec. 3, 2015 by N. Messios (BIRA-IASB)
+ !                      - Updates and validation against SPENVIS-NG  
+ !                        XML Schema Definition (XSD). 
+ !                      Apr. 4, 2016 by S. Calders (BIRA-IASB) 
+ !                      - Cleaning the graph section
+ !         (c) Copyright European Space Agency, 2015
+ !-->
+<spenvis-workflow 
+    xmlns     = "http://spenvis-ng.eu/spenvis-model-workflow"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sn1 = "http://spenvis-ng.eu/spenvis-model-manifest"
+    xmlns:sn2 = "http://spenvis-ng.eu/spenvis-model-workflow"
+    xmlns:xml = "http://www.w3.org/XML/1998/namespace"
+    xmlns:xs  = "http://www.w3.org/2001/XMLSchema"
+    xmlns:vot = "http://www.ivoa.net/xml/VOTable/v1.2"
+    xmlns:stc = "http://www.ivoa.net/xml/STC/v1.30"
+    xmlns:spa = "http://www.spase-group.org/data/schema"
+    xmlns:xf  = "http://www.w3.org/2002/xforms"
+    xmlns:fn  = "http://www.w3.org/2005/xpath-functions"
+    xmlns:html = "http://www.w3.org/1999/xhtml">
+    <spa:ResourceID>spenvis://estec.esa.int/spenvis/sd2q/wkf_geo_trepAE8_sd2q/0002</spa:ResourceID>  
+    <spa:ResourceHeader>
+        <spa:ResourceName>SD2Q-TREPAE8-GEOWKFL</spa:ResourceName> 
+        <spa:ReleaseDate>2015-11-03T00:00:00.0Z</spa:ReleaseDate> 
+        <spa:Description>
+            This workflow allows a user to create a geostationary orbit (GEO) using the ESOC UNIFLUX 
+            Orbit generator SAPRE (Earth) and subsequently run the AE-8 model. The mission average 
+            electron spectrum is the then used for calculating doses behind some Aluminium shielding 
+            using the SHIELDOSE-2Q model.
+        </spa:Description> 
+        <spa:Acknowledgement>
+            This interface has been prepared by N. Messios (BIRA-IASB).&nbsp;
+            &copy; Copyright ESA 2015 
+        </spa:Acknowledgement> 
+        <spa:Contact> 
+            <spa:PersonID>spenvis://www.aeronomie/people/ae_spen/1224</spa:PersonID> 
+            <spa:Role>MetadataContact</spa:Role>                                         
+        </spa:Contact> 
+        <spa:Contact> 
+            <spa:PersonID>spenvis://www.aeronomie/people/ae_spen/1151</spa:PersonID> 
+            <spa:Role>MetadataContact</spa:Role>                                         
+        </spa:Contact> 
+    </spa:ResourceHeader>
+    <spa:ProviderResourceName>SD2Q-TREPAE8-GEOWKFL</spa:ProviderResourceName>                    
+    <spa:ProviderVersion>02.000</spa:ProviderVersion>                        
+    <isMajorChange/>
+    <access-policy>
+      <grant-to>.*</grant-to>
+    </access-policy>   
+    <simpleWorkflow/>
+    <associatedModels>
+      <model>
+        <name>sapreEarth</name>
+        <manifestID>spenvis://estec.esa.int/spenvis4/sapreEarth/2956</manifestID>
+        <instanceElement>
+          <name>sapreEarth_input</name>
+          <manifestGroupName type="input-group">Definition</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sapreEarth_Summary</name>
+          <manifestGroupName type="output-group">Summary</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sapreEarth_Trajectory</name>
+          <manifestGroupName type="output-group">Trajectory</manifestGroupName>
+        </instanceElement>
+      </model>
+      <model>
+        <name>trepAE8</name>
+        <manifestID>spenvis://estec.esa.int/spenvis4/trepAE8/2956</manifestID>
+        <instanceElement>
+          <name>trepAE8_input</name>
+          <manifestGroupName type="input-group">Definition</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>trepAE8_Trajectory</name>
+          <manifestGroupName type="input-group">Trajectory</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>trepAE8_Summary</name>
+          <manifestGroupName type="output-group">Summary</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>trepAE8_Preserved</name>
+          <manifestGroupName type="output-group">Preserved</manifestGroupName>
+        </instanceElement>
+      </model>
+      <model>
+        <name>sd2q</name>
+        <manifestID>spenvis://estec.esa.int/spenvis4/sd2q/2956</manifestID>
+        <instanceElement>
+          <name>sd2q_input</name>
+          <manifestGroupName type="input-group">Definition</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sd2q_Environment</name>
+          <manifestGroupName type="input-group">Environment</manifestGroupName>
+        </instanceElement>
+        <instanceElement>
+          <name>sd2q_doses</name>
+          <manifestGroupName type="output-group">Doses</manifestGroupName>
+        </instanceElement>
+      </model>
+    </associatedModels>
+    <xs:schema>
+    </xs:schema>
+    <intern-groups>
+      <!-- GEO orbit input-->          
+      <static-group>
+        <vot-TABLE name="geo">
+          <vot:PARAM name="segmentTitle" ucd="meta.title" 
+                     datatype="char" arraysize="*"              
+                     value="Geostationary orbit" />
+          <vot:PARAM name="orbitType" ucd="meta.id"
+                     datatype="char" arraysize="*"                       
+                     value="GEO" />                     
+          <vot:PARAM name="lowAltitudeTimeResolution" ucd="time.resolution"             
+                     datatype="double"         
+                     value="60.0" unit="s" />
+          <vot:PARAM name="mediumAltitudeTimeResolution" ucd="time.resolution"             
+                     datatype="double"          
+                     value="240.0" unit="s" />
+          <vot:PARAM name="highAltitudeTimeResolution" ucd="time.resolution"             
+                     datatype="double"          
+                     value="3600.0" unit="s" />
+          <vot:PARAM name="upperBoundaryAltitude" ucd="stat.max"             
+                     datatype="double"                 
+                     value="80000.0" unit="km" />
+          <vot:PARAM name="lowerBoundaryAltitude" ucd="stat.min"             
+                     datatype="double"                 
+                     value="20000.0" unit="km" />
+        </vot-TABLE>
+        <xf:bind nodeset="segmentTitle" 
+                 type="xs:normalizedString" />
+        <xf:bind nodeset="orbitType" 
+                 type="enumOrbitType" /> 
+        <xf:bind nodeset="lowAltitudeTimeResolution" 
+                 type="xs:float" />
+        <xf:bind nodeset="mediumAltitudeTimeResolution" 
+                 type="xs:float" />
+        <xf:bind nodeset="highAltitudeTimeResolution" 
+                 type="xs:float" />
+        <xf:bind nodeset="upperBoundaryAltitude" 
+                 type="xs:float" />
+        <xf:bind nodeset="lowerBoundaryAltitude" 
+                 type="xs:float" />      
+      </static-group>
+      <!-- AE-8 input-->          
+      <static-group>
+        <vot-TABLE name="ae8">
+          <vot:PARAM name="energies" ucd="phys.energy"
+                     datatype="float" arraysize="*"
+                     utype="spa:Particle.ParticleQuality.Energy"                             
+                     value="0.04 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0 5.5 6.0 6.5 7.0" 
+                     unit="MeV" />      
+        </vot-TABLE>
+        <xf:bind nodeset="energies" 
+                 type="listOfFloats" />      
+      </static-group>
+      <!-- SHIELDOSE-2Q input-->          
+      <static-group>
+        <vot-TABLE name="sd2q">
+          <vot:PARAM name="shieldDepthSpecification" ucd="meta" 
+                     datatype="char" arraysize="*"    
+                     value="default" /> 
+          <vot:PARAM name="nuclearAttenuation" ucd="meta"
+                     datatype="char" arraysize="*"  
+                     value="1" /> 
+        </vot-TABLE>
+        <xf:bind nodeset="shieldDepthSpecification" 
+                 type="enumShieldDepthSpecification" />      
+        <xf:bind nodeset="nuclearAttenuation" 
+                 type="enumNuclearAttenuation" />      
+      </static-group>
+    </intern-groups>
+    <constraints>
+      <xf:bind nodeset="sapreEarth_input/orbitType" calculate="'GEO'" />     
+    </constraints>
+    <processes>
+      <process>
+        <title>Main</title>
+        <condition>fn:true()</condition>
+        <graph>
+          <!-- GEO orbit--> 
+          <connect from="geo/segmentTitle" to="sapreEarth_input/segmentTitle"/>
+          <connect from="geo/orbitType" to="sapreEarth_input/orbitType"/>
+          <connect from="geo/lowAltitudeTimeResolution" to="sapreEarth_input/lowAltitudeTimeResolution"/>        
+          <connect from="geo/mediumAltitudeTimeResolution" to="sapreEarth_input/mediumAltitudeTimeResolution"/>        
+          <connect from="geo/highAltitudeTimeResolution" to="sapreEarth_input/highAltitudeTimeResolution"/>        
+          <connect from="geo/upperBoundaryAltitude" to="sapreEarth_input/upperBoundaryAltitude"/>        
+          <connect from="geo/lowerBoundaryAltitude" to="sapreEarth_input/lowerBoundaryAltitude"/>        
+          <provide to="sapreEarth_input/segmentStartEpoch"/>
+          <provide to="sapreEarth_input/segmentDuration"/>
+          <provide to="sapreEarth_input/trajectoryDurationSpecification"/>
+          <provide to="sapreEarth_input/trajectoryDuration"/>
+          <provide to="sapreEarth_input/numberOfOrbits"/>
+          <provide to="sapreEarth_input/longitudeOfGeostationaryOrbit"/>
+          <provide to="sapreEarth_input/solarRadiationPressurePerturbation"/>
+          <provide to="sapreEarth_input/solarRadiationPressure"/>
+          <ignore to="sapreEarth_input/atmosphericDragParameter"/>    
+          <ignore to="sapreEarth_input/centered81DayAverageSolarRadioFlux"/>    
+          <ignore to="sapreEarth_input/dailySolarRadioFlux"/>    
+          <ignore to="sapreEarth_input/dailyAverageApIndex"/>     
+          <ignore to="sapreEarth_input/firstLineTLE"/>    
+          <ignore to="sapreEarth_input/secondLineTLE"/>    
+          <ignore to="sapreEarth_input/altitudeSpecification"/> 
+          <ignore to="sapreEarth_input/perigeeAltitude"/>    
+          <ignore to="sapreEarth_input/apogeeAltitude"/>    
+          <ignore to="sapreEarth_input/semiMajorAxis"/>    
+          <ignore to="sapreEarth_input/eccentricity"/>    
+          <ignore to="sapreEarth_input/circularOrbitAltitude"/>  
+          <ignore to="sapreEarth_input/inclination"/>    
+          <ignore to="sapreEarth_input/ascendingNodeSpecification"/>
+          <ignore to="sapreEarth_input/rightAscensionOfAscendingNode"/>
+          <ignore to="sapreEarth_input/longitudeOfApogee"/>
+          <ignore to="sapreEarth_input/longitudeOfPerigee"/>
+          <ignore to="sapreEarth_input/argumentOfPerigee"/>
+          <ignore to="sapreEarth_input/trueAnomaly"/>
+          <ignore to="sapreEarth_input/localTimeOfAscendingNode"/>
+          <capture from="sapreEarth_Summary/NAIFreferenceCenter"/>   
+          <capture from="sapreEarth_Summary/segmentDuration"/>   
+          <capture from="sapreEarth_Summary/trajectoryDuration"/>
+          <capture from="sapreEarth_Summary/minimumAltitude"/>
+          <capture from="sapreEarth_Summary/maximumAltitude"/>
+          <capture from="sapreEarth_Summary/meanSunDistance"/>
+          <capture from="sapreEarth_Trajectory/epoch"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/altitude"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/latitude"/>
+          <capture from="sapreEarth_Trajectory/planetodeticCoordinates/longitude"/>
+          <!-- AE-8 --> 
+          <connect from="ae8/energies" to="trepAE8_input/energies"/>
+          <connect from="sapreEarth_Trajectory/epoch" to="trepAE8_Trajectory/epoch"/>
+          <connect from="sapreEarth_Trajectory/dt" to="trepAE8_Trajectory/dt"/>
+          <connect from="sapreEarth_Trajectory/dtOffset" to="trepAE8_Trajectory/dtOffset"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/NAIFreferenceCenter" to="trepAE8_Trajectory/planetodeticCoordinates/NAIFreferenceCenter"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/planetoidReference" to="trepAE8_Trajectory/planetodeticCoordinates/planetoidReference"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/coordinateFlavor" to="trepAE8_Trajectory/planetodeticCoordinates/coordinateFlavor"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/altitude" to="trepAE8_Trajectory/planetodeticCoordinates/altitude"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/latitude" to="trepAE8_Trajectory/planetodeticCoordinates/latitude"/>
+          <connect from="sapreEarth_Trajectory/planetodeticCoordinates/longitude" to="trepAE8_Trajectory/planetodeticCoordinates/longitude"/>
+          <provide   to="trepAE8_input/exposureThresholdFlux"/>
+          <provide   to="trepAE8_input/AE8mode"/>
+          <provide   to="trepAE8_input/AE8localTimeVariation"/>
+          <provide   to="trepAE8_input/AE8confidenceLevel"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/particleName"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/Q"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/PDGcode"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/angularDistribution"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/hasIntegral"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/hasDifferential"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/isTimeIntegrated"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/energy"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/integralIntensity"/>
+          <capture from="trepAE8_Summary/electronFluxSpectrum/differentialIntensity"/>
+          <!-- SHIELDOSE-2Q --> 
+          <connect from="sd2q/shieldDepthSpecification" to="sd2q_input/shieldDepthSpecification"/>
+          <connect from="sd2q/nuclearAttenuation" to="sd2q_input/nuclearAttenuation"/>
+          <connect from="sapreEarth_Summary/segmentDuration" to="sd2q_input/segmentDuration"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/particleName" to="sd2q_Environment/electronFluxSpectrum/particleName"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/Q" to="sd2q_Environment/electronFluxSpectrum/Q"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/PDGcode" to="sd2q_Environment/electronFluxSpectrum/PDGcode"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/angularDistribution" to="sd2q_Environment/electronFluxSpectrum/angularDistribution"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/hasIntegral" to="sd2q_Environment/electronFluxSpectrum/hasIntegral"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/hasDifferential" to="sd2q_Environment/electronFluxSpectrum/hasDifferential"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/isTimeIntegrated" to="sd2q_Environment/electronFluxSpectrum/isTimeIntegrated"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/energy" to="sd2q_Environment/electronFluxSpectrum/energy"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/integralIntensity" to="sd2q_Environment/electronFluxSpectrum/integralIntensity"/>
+          <connect from="trepAE8_Summary/electronFluxSpectrum/differentialIntensity" to="sd2q_Environment/electronFluxSpectrum/differentialIntensity"/>
+          <provide   to="sd2q_input/shieldingConfiguration"/>
+          <provide   to="sd2q_input/shieldingMaterial"/>
+          <provide   to="sd2q_input/detectorMaterial"/>
+          <ignore    to="sd2q_input/shieldDepthUnits"/>
+          <ignore    to="sd2q_input/shieldDepthValues"/>
+          <ignore    to="sd2q_input/SSATdoseMode"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/particleName"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/Q"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/PDGcode"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/angularDistribution"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/hasIntegral"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/hasDifferential"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/isTimeIntegrated"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/energy"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/integralIntensity"/>
+          <ignore    to="sd2q_Environment/protonFluxSpectrum/differentialIntensity"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/particleName"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/Q"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/PDGcode"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/angularDistribution"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/hasIntegral"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/hasDifferential"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/isTimeIntegrated"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/energy"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/integralIntensity"/>
+          <ignore    to="sd2q_Environment/solarProtonSpectrum/differentialIntensity"/>
+          <capture from="sd2q_doses/shieldingConfiguration"/>
+          <capture from="sd2q_doses/shieldingMaterial"/>
+          <capture from="sd2q_doses/detectorMaterial"/>
+          <capture from="sd2q_doses/dose/thickness"/>
+          <capture from="sd2q_doses/dose/totalDose"/>
+          <capture from="sd2q_doses/dose/electronDose"/>
+          <capture from="sd2q_doses/dose/bremsstrahlungDose"/>
+        </graph>
+      </process>
+    </processes>
+    <resourceGathering> 
+<!-- Mission and representative trajectory definition tab -->         
+      <tab>
+        <label>GEO mission and representative trajectory</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Mission and representative trajectory</h3>
+          <fieldset>
+            <legend>Mission definition</legend>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/segmentStartEpoch">
+                <xf:label>Starting date of mission segment:</xf:label>
+                <xf:help>The starting date of the mission segment.</xf:help>
+                <!-- xf:hint>If present, the time zone must be Z (UTC)</xf:hint -->
+              </xf:input>
+            </html:p>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/segmentDuration">
+                <xf:label>Mission segment duration:</xf:label>
+                <xf:help>Duration of the mission segment in years.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+          <fieldset>
+            <legend>Representative trajectory input</legend>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/trajectoryDurationSpecification">
+                <xf:label>Define representative trajectory duration using</xf:label>
+                <!-- xf:help>User can select either number of orbits or trajectory duration.</xf:help -->
+                <!-- xf:hint>No hint</xf:hint -->              
+                <xf:item>
+                  <xf:label>number of orbits</xf:label>
+                  <xf:value>numberOfOrbits</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>trajectory duration</xf:label>
+                  <xf:value>trajectoryDuration</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/numberOfOrbits">
+                <xf:label>Number of orbits:</xf:label>
+                <xf:help>Number of orbits to be generated.</xf:help>
+                <xf:hint>Maximum 20 and minimum 0.1</xf:hint>
+              </xf:input>
+              <xf:input ref="sapreEarth_input/trajectoryDuration">
+                <xf:label>Trajectory duration:</xf:label>
+                <xf:help>Duration of the trajectory in days.</xf:help>
+                <!-- xf:hint>Use either "sPnYnM" or "sPnDTnHnMnS"</xf:hint -->
+              </xf:input>            
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>        
+<!-- GEO parameters -->        
+      <tab>
+        <label>Orbital parameters</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" />
+        <html:div>
+        <h3>Orbital parameters</h3>
+          <fieldset>
+            <legend>GEO parameters</legend>
+            <html:p>       
+              <xf:input ref="sapreEarth_input/longitudeOfGeostationaryOrbit">
+                <xf:label>Longitude for Geostationary orbit [deg]:</xf:label>
+                <xf:help>Longitude for a GEO in degrees.</xf:help>
+                <xf:hint>Minimum 0, maximum 360 degrees</xf:hint>
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>        
+<!-- Solar radiation pressure tab -->     
+      <tab>
+        <label>Solar radiation pressure</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+        <h3>Perturbations due to solar radiation pressure</h3>
+          <html:p>
+            Solar radiation pressure parameter is defined as 0.451x10<html:sup>-8</html:sup> K A/M, where K is the material 
+            parameter of the satellite.&nbsp; A is the total reflective area (m<html:sup>2</html:sup>) of satellites 
+            and plates; &nbsp; for spherical satellites it is the cross sectional area. M (kg) is the 
+            mass of the satellite.
+            </html:p>
+            <html:p> 
+            Note that K depends on the the reflectivity (rho) and 
+            transmittivity (gamma):
+            <html:ul>
+              <html:li>K=1-gamma+rho (plate), K=1-gamma (sphere)</html:li>
+              <html:li>K=2 (plate with perfect specular reflection)</html:li>
+              <html:li>K=1 (sphere with perfect specular reflection or perfect absorption)</html:li>
+              <html:li>K=1.44 (sphere with perfect diffuse reflection)</html:li>
+            </html:ul>
+          </html:p>       
+          <html:p></html:p>        
+          <fieldset>
+            <legend>Solar radiation pressure</legend>
+            <html:p>
+              <xf:select1 ref="sapreEarth_input/solarRadiationPressurePerturbation">
+                <xf:label>Account for the solar radiation pressure:</xf:label>
+                <xf:help>Orbit generator accounts for solar radiation pressure perturbation.</xf:help>
+                <!-- xf:hint>No hint</xf:hint -->              
+                <xf:item>
+                  <xf:label>no</xf:label>
+                  <xf:value>0</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>yes</xf:label>
+                  <xf:value>1</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>          
+              <xf:input ref="sapreEarth_input/solarRadiationPressure">
+                <xf:label>Solar radiation pressure parameter [m<html:sup>2</html:sup>kg<html:sup>-1</html:sup>]:</xf:label>
+                <xf:help>Solar radiation pressure parameter.</xf:help>
+                <xf:hint>Maximum 1 and minimum 0 m2.kg-1</xf:hint>
+              </xf:input>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>        
+<!-- AE-8 input tab -->     
+      <tab>
+        <label>NASA AE-8 model</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" />
+        <html:div>
+        <h3>Electron trapped radiation environment</h3>
+          <fieldset>
+            <legend>AE-8 parameters</legend>
+            <html:p>       
+              <xf:input ref="trepAE8_input/exposureThresholdFlux">
+                <xf:label>Exposure threshold flux [cm-2.s-1]:</xf:label>
+                <xf:help>Threshold flux for exposure.</xf:help>
+                <xf:hint>Minimum 0, maximum 1000 cm-2.s-1</xf:hint>
+              </xf:input>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="trepAE8_input/AE8mode">
+                <xf:label>AP-8 mode:</xf:label>
+                <xf:help>Mode selection for AE-8 model.</xf:help>
+                <xf:hint>Possible values are solarMaximum or solarMinimum</xf:hint>              
+                <xf:item>
+                  <xf:label>solar maximum</xf:label>
+                  <xf:value>solarMaximum</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>solar minimum</xf:label>
+                  <xf:value>solarMinimum</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="trepAE8_input/AE8localTimeVariation">
+                <xf:label>Account for local time variation:</xf:label>
+                <xf:help>Local time variation flag.</xf:help>
+                <xf:hint>Possible values are 0 or 1</xf:hint>              
+                <xf:item>
+                  <xf:label>no</xf:label>
+                  <xf:value>0</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>yes</xf:label>
+                  <xf:value>1</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="trepAE8_input/AE8confidenceLevel">
+                <xf:label>AE-8 confidence level[%]:</xf:label>
+                <xf:help>Confidence level for AE-8 model.</xf:help>
+                <xf:hint>Possible values are 0.135, 2.275, 15.865, 50.000, 84.135, 97.725 and 99.865</xf:hint>              
+                <xf:item>
+                  <xf:label>0.135</xf:label>
+                  <xf:value>0.135</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>2.275</xf:label>
+                  <xf:value>2.275</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>15.865</xf:label>
+                  <xf:value>15.865</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>50.000</xf:label>
+                  <xf:value>50.000</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>84.135</xf:label>
+                  <xf:value>84.135</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>97.725</xf:label>
+                  <xf:value>97.725</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>99.865</xf:label>
+                  <xf:value>99.865</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>        
+<!-- SHIELDOSE-2Q input tab -->     
+      <tab>
+        <label>SHIELDOSE-2Q</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" />
+        <html:div>
+        <h3>SHIELDOSE-2Q ionizing dose model</h3>
+          <fieldset>
+            <legend>SHIELDOSE-2Q parameters</legend>
+            <html:p>
+              <xf:select1 ref="sd2q_input/shieldingConfiguration">
+                <xf:label>Shielding configuration:</xf:label>
+                <xf:help>Shielding configuration selection for SHIELDOSE-2Q model.</xf:help>
+                <xf:hint>Possible values are finite Slab, semi-infinite slab and spherical Shielding</xf:hint>              
+                <xf:item>
+                  <xf:label>finite slab</xf:label>
+                  <xf:value>finiteSlab</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>semi-infinite slab</xf:label>
+                  <xf:value>semiInfiniteSlab</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>spherical Shielding</xf:label>
+                  <xf:value>sphericalShielding</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="sd2q_input/shieldingMaterial">
+                <xf:label>Shield composition:</xf:label>
+                <xf:help>Material of the shield.</xf:help>
+                <xf:hint>Possible values are Aluminium, Titanium, Iron, Tantalum, CW80 Copper-tungsten alloy and Al (1 mm) plus Ta bi-layer</xf:hint>              
+                <xf:item>
+                  <xf:label>Aluminium</xf:label>
+                  <xf:value>Aluminium</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Titanium</xf:label>
+                  <xf:value>Titanium</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Iron</xf:label>
+                  <xf:value>Iron</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Tantalum</xf:label>
+                  <xf:value>Tantalum</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>CW80 Copper-tungsten alloy</xf:label>
+                  <xf:value>CW80CopperTungstenAlloy</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Al (1 mm) plus Ta bi-layer</xf:label>
+                  <xf:value>1mmAlPlusTaBiLayer</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+            <html:p>
+              <xf:select1 ref="sd2q_input/detectorMaterial">
+                <xf:label>Detector material:</xf:label>
+                <xf:help>Material of the delector.</xf:help>
+                <xf:hint>Possible values are Al, Graphite, Si, Air, Bone, CaF2, GaAs, LiF, SiO2, Tissue, H20, P-imide, Epoxy, HfO2, SiC, InGaAs, HgCdTe, NaI, MgO, Ge, Ti, Fe, Ta, W and CW80</xf:hint>              
+                <xf:item>
+                  <xf:label>Aluminium</xf:label>
+                  <xf:value>Al</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Graphite</xf:label>
+                  <xf:value>Graphite</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Silicon</xf:label>
+                  <xf:value>Si</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Air</xf:label>
+                  <xf:value>Air</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Bone</xf:label>
+                  <xf:value>Bone</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Calcium fluoride</xf:label>
+                  <xf:value>CaF2</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Galium arsenide</xf:label>
+                  <xf:value>GaAs</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Lithium fluoride</xf:label>
+                  <xf:value>LiF</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Silicon dioxide</xf:label>
+                  <xf:value>SiO2</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Tissue</xf:label>
+                  <xf:value>Tissue</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Water</xf:label>
+                  <xf:value>H2O</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Polyimide</xf:label>
+                  <xf:value>P-imide</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Epoxy</xf:label>
+                  <xf:value>Epoxy</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Hafnium oxide</xf:label>
+                  <xf:value>HfO2</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Silicon carbide</xf:label>
+                  <xf:value>SiC</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Indium gallium arsenide</xf:label>
+                  <xf:value>InGaAs</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Mercury cadmium telluride</xf:label>
+                  <xf:value>HgCdTe</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Sodium iodide</xf:label>
+                  <xf:value>NaI</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Magnesium oxide</xf:label>
+                  <xf:value>MgO</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Germanium</xf:label>
+                  <xf:value>Ge</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Titanium</xf:label>
+                  <xf:value>Ti</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Iron</xf:label>
+                  <xf:value>Fe</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Tantalum</xf:label>
+                  <xf:value>Ta</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>Tungsten</xf:label>
+                  <xf:value>W</xf:value>
+                </xf:item>
+                <xf:item>
+                  <xf:label>CW80 Copper-tungsten alloy</xf:label>
+                  <xf:value>CW80</xf:value>
+                </xf:item>
+              </xf:select1>
+            </html:p>
+          </fieldset>
+          <html:p></html:p>        
+        </html:div>        
+      </tab>      
+    </resourceGathering>    
+    <resourceDelivering>
+      <tab>
+        <label>Mission summary</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Mission and representative trajectory summary</html:h3>
+          <html:p>
+          </html:p>
+          <html:ul>
+            <html:li>
+                Mission duration [years]: <xf:output ref="sapreEarth_Summary/segmentDuration"/>
+            </html:li>
+            <html:li>
+                Representative trajectory duration [days]: <xf:output ref="sapreEarth_Summary/trajectoryDuration"/>
+            </html:li>
+            <html:li>
+                Orbit type: <xf:output ref="sapreEarth_input/orbitType"/> 
+            </html:li>
+            <html:li>
+                Minimum altitude [km]: <xf:output ref="sapreEarth_Summary/minimumAltitude"/>
+            </html:li>
+            <html:li>
+                Maximum altitude [km]: <xf:output ref="sapreEarth_Summary/maximumAltitude"/>
+            </html:li>
+            <html:li>
+                Mean distance between spacecraft and the Sun [AU]: <xf:output ref="sapreEarth_Summary/meanSunDistance"/>
+            </html:li>
+          </html:ul>
+        </html:div>
+      </tab>
+      <tab>
+        <label>SD2Q summary</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Shielding overview</html:h3>
+          <html:p>
+          </html:p>
+          <html:ul>
+            <html:li>
+                Shield configuration: <xf:output ref="sd2q_doses/shieldingConfiguration"/>
+            </html:li>
+            <html:li>
+                Shield material: <xf:output ref="sd2q_doses/shieldingMaterial"/>
+            </html:li>
+            <html:li>
+                Target material: <xf:output ref="sd2q_doses/detectorMaterial"/> 
+            </html:li>
+          </html:ul>
+        </html:div>
+      </tab>
+      <tab>
+        <label>Electron flux spectrum</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Mission average electron flux spectrum</html:h3>
+          <html:p>
+          <html:table border="2" cellpadding="4" cellspacing="0">
+            <html:tr>
+              <html:th>Energy</html:th>
+              <html:th>Integral flux</html:th>
+              <html:th>Differential flux</html:th>
+            </html:tr>
+            <html:tr>
+              <html:td>[MeV]</html:td>
+              <html:td>[cm<html:sup>-2</html:sup> s<html:sup>-1</html:sup>]</html:td>
+              <html:td>[cm<html:sup>-2</html:sup> MeV<html:sup>-1</html:sup> s<html:sup>-1</html:sup>]</html:td>
+            </html:tr>
+            <html:tr>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="trepAE8_Summary/electronFluxSpectrum/energy">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="trepAE8_Summary/electronFluxSpectrum/integralIntensity">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="trepAE8_Summary/electronFluxSpectrum/differentialIntensity">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+            </html:tr>
+          </html:table>              
+          </html:p>
+        </html:div>
+      </tab>
+      <tab>
+        <label>SHIELDOSE-2Q Doses</label>
+        <condition relevant="fn:true()" 
+                   isValid="fn:true()" /> 
+        <html:div>
+          <html:h3>Ionizing dose from trapped electron flux spectrum</html:h3>
+          <html:p>
+          
+          <html:table border="2" cellpadding="4" cellspacing="0">
+            <html:tr>
+              <html:th>Eqv. Al absorber thickness</html:th>
+              <html:th>Total dose</html:th>
+              <html:th>Electron dose</html:th>
+              <html:th>Bremsstrahlung dose</html:th>
+            </html:tr>
+            <html:tr>
+              <html:td>[mm]</html:td>
+              <html:td>[rad]</html:td>
+              <html:td>[rad]</html:td>
+              <html:td>[rad]</html:td>
+            </html:tr>
+            <html:tr>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sd2q_doses/dose/thickness">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sd2q_doses/dose/totalDose">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sd2q_doses/dose/electronDose">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+              <html:td valign="middle" align="center">
+                <html:table border="0" cellpadding="2" cellspacing="0">
+                  <xf:repeat ref="sd2q_doses/dose/bremsstrahlungDose">
+                    <html:tr><html:td align="center"><xf:output ref="." /></html:td></html:tr>
+                  </xf:repeat>
+                </html:table>
+              </html:td>
+            </html:tr>
+          </html:table>              
+          </html:p>
+        </html:div>
+      </tab>
+      <report-tab>
+      </report-tab>
+      <plot-tab>
+        <plotable type="scatter" title="Electron integral flux">trepAE8_Summary/electronFluxSpectrum/integralIntensity</plotable>
+        <plotable type="scatter" title="Mission total dose">sd2q_doses/dose/totalDose</plotable>
+      </plot-tab>      
+    </resourceDelivering>
+    <persons>  
+        <spa:Person>                                                                 
+            <spa:ResourceID>spenvis://www.aeronomie.be/people/ae_spen/1224</spa:ResourceID> 
+            <spa:PersonName>Neophytos Messios</spa:PersonName> 
+            <spa:OrganizationName>Belgian Institute for Space Aeronomy</spa:OrganizationName> 
+            <spa:Address>BIRA-IASB L2A2; Ringlaan 3; B-1180 Brussel; BELGIUM</spa:Address> 
+            <spa:Email>neophytos.messios@aeronomie.be</spa:Email> 
+            <spa:PhoneNumber>+32-2-3730419</spa:PhoneNumber>
+            <spa:FaxNumber>+3223748423</spa:FaxNumber> 
+            <spa:Note>http://www.aeronomie.be/en/organisation/spaceweather.htm</spa:Note> 
+        </spa:Person>
+    </persons>
+</spenvis-workflow>

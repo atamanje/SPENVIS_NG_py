@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.2" version="1.2">
+    <RESOURCE name="spenvis://estec.esa.int/spenvis4/sapreEarth/2956">
+        <TABLE name="Definition">
+            <PARAM value="240.0" unit="s" datatype="double" name="mediumAltitudeTimeResolution" ucd="time.resolution"/>
+            <PARAM value="P1Y" datatype="char" name="segmentDuration" ucd="time.duration" arraysize="*"/>
+            <PARAM value="trajectoryDuration" datatype="char" name="trajectoryDurationSpecification" ucd="meta" arraysize="*"/>
+            <PARAM value="P1D" datatype="char" name="trajectoryDuration" ucd="time.duration" arraysize="*"/>
+            <PARAM value="80000.0" unit="km" datatype="double" name="upperBoundaryAltitude" ucd="stat.max"/>
+            <PARAM value="20000.0" unit="km" datatype="double" name="lowerBoundaryAltitude" ucd="stat.min"/>
+            <PARAM value="0.0" unit="deg" datatype="double" name="longitudeOfGeostationaryOrbit" ucd="pos.earth.lon"/>
+            <PARAM value="0" datatype="boolean" name="solarRadiationPressurePerturbation" ucd="meta"/>
+            <PARAM value="GEO" datatype="char" name="orbitType" ucd="meta.id" arraysize="*"/>
+            <PARAM value="2011-01-01T00:00:00Z" datatype="char" name="segmentStartEpoch" ucd="time.epoch" arraysize="*"/>
+            <PARAM value="Geostationary orbit" datatype="char" name="segmentTitle" ucd="meta.title" arraysize="*"/>
+            <PARAM value="60.0" unit="s" datatype="double" name="lowAltitudeTimeResolution" ucd="time.resolution"/>
+            <PARAM value="3600.0" unit="s" datatype="double" name="highAltitudeTimeResolution" ucd="time.resolution"/>
+        </TABLE>
+    </RESOURCE>
+</VOTABLE>

@@ -1,0 +1,5 @@
+configobj==4.7.2
+requests==2.1.0
+suds==0.4
+suds-requests==0.1
+wsgiref==0.1.2
